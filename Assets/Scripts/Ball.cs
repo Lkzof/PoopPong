@@ -12,6 +12,8 @@ public class Ball : MonoBehaviour
     public bool r_down;
     public bool l_up;
     public bool l_down;
+    public int p1 = 3;
+    public int p2 = 3;
     private AudioSource sound;
     void Start()
     {
@@ -23,6 +25,15 @@ public class Ball : MonoBehaviour
         l_up = false;
         l_down = false;
 
+    }
+
+    void Update(){
+        if(p1 < 1){
+            SceneManager.LoadScene("P2Win");
+        }
+        if(p2 < 1){
+            SceneManager.LoadScene("P1Win");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col){
@@ -37,7 +48,7 @@ public class Ball : MonoBehaviour
                 rb.velocity = new Vector2(-x, y);
                 l_up = true;
                 r_up = false;    
-                sound.Play();   
+                p2 -= 1; 
             }else if(col.gameObject.name == "X1"){
                 rb.velocity = new Vector2(x, -y);
                 r_up = false;
@@ -61,7 +72,7 @@ public class Ball : MonoBehaviour
                 rb.velocity = new Vector2(-x, -y);
                 r_down = false;
                 l_down = true;
-                sound.Play();
+                p2 -= 1;
             }
         }
         // Está indo pra esquerda e pra baixo
@@ -81,7 +92,7 @@ public class Ball : MonoBehaviour
                 rb.velocity = new Vector2(x, -y);
                 r_down = true;
                 l_down = false;
-                sound.Play();
+                p1 -= 1;
             }
         }
         // Está indo pra esquerda e para cima
@@ -95,7 +106,8 @@ public class Ball : MonoBehaviour
                 rb.velocity = new Vector2(x, y);
                 r_up = true;
                 l_up = false;
-                sound.Play();
+                p1 -= 1;
+
             }else if(col.gameObject.name == "X1"){
                 rb.velocity = new Vector2(-x, -y);
                 l_down = true;
@@ -103,5 +115,8 @@ public class Ball : MonoBehaviour
                 sound.Play();
             }
         }
+
     }
+
+
 }
